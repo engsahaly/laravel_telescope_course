@@ -1,11 +1,15 @@
 <?php
 
-use App\Events\NewEvent;
 use App\Jobs\newJob;
+use App\Events\NewEvent;
 use Illuminate\Support\Facades\Bus;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +51,21 @@ Route::get('/event', function () {
 
 Route::get('/exception', function () {
     throw new Exception("this is an exception");
+});
+
+Route::get('/gates', function () {
+    if (Gate::forUser(Auth::user())->allows('testGate')) {
+        return 'you are allowed to take this action';
+    }
+    abort(403);
+});
+
+Route::get('/http', function () {
+    return Http::get('http://example.com');
+});
+
+Route::get('/logs', function () {
+    Log::error("hello from the logs");;
 });
 
 Route::get('/dashboard', function () {

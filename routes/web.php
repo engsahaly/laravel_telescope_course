@@ -65,7 +65,7 @@ Route::get('/http', function () {
 });
 
 Route::get('/logs', function () {
-    Log::error("hello from the logs");;
+    Log::info("hello from the logs info level");;
 });
 
 Route::get('/dashboard', function () {
